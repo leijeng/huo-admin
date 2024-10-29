@@ -1,0 +1,21 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "致力于做一个开发快速，运行稳定的框架",
+        "title": "Huo API",
+        "contact": {
+            "name": "lei",
+            "url": "https://github.com/leijeng/huo-admin",
+            "email": "lisite199505@gmail.com"
+        },
+        "version": "V1.0.1"
+    },
+    "paths": {},
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

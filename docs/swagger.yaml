@@ -1,0 +1,15 @@
+info:
+  contact:
+    email: lisite199505@gmail.com
+    name: lei
+    url: https://github.com/leijeng/huo-admin
+  description: 致力于做一个开发快速，运行稳定的框架
+  title: Huo API
+  version: V1.0.1
+paths: {}
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
