@@ -21,7 +21,7 @@ type SysMenu struct {
 }
 
 var SerSysMenu = SysMenu{
-	base.NewService("admin"),
+	base.NewService(""),
 }
 
 // GetPage 获取SysMenu列表

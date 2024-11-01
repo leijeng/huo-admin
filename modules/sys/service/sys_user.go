@@ -7,5 +7,5 @@ type SysUser struct {
 }
 
 var SerSysUser = SysUser{
-	base.NewService("admin"),
+	base.NewService(""),
 }

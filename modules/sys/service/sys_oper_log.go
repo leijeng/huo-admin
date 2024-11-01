@@ -7,5 +7,5 @@ type SysOperaLogService struct {
 }
 
 var SerSysOperaLog = SysOperaLogService{
-	base.NewService("admin"),
+	base.NewService(""),
 }

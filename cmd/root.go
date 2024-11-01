@@ -40,6 +40,7 @@ func tip() {
 
 func init() {
 	rootCmd.AddCommand(start.StartCmd)
+	rootCmd.AddCommand(start.GenCmd)
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

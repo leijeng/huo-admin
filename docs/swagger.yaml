@@ -1,3 +1,122 @@
+definitions:
+  base.PageResp:
+    properties:
+      currentPage:
+        description: 当前第几页
+        type: integer
+      list:
+        description: 数据列表
+      pageSize:
+        description: 分页大小
+        type: integer
+      total:
+        description: 总条数
+        type: integer
+    type: object
+  base.ReqId:
+    properties:
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  base.ReqIds:
+    properties:
+      ids:
+        description: 多id
+        items:
+          type: integer
+        type: array
+    type: object
+  base.Resp:
+    properties:
+      code:
+        description: 返回码
+        type: integer
+      data:
+        description: 数据
+      msg:
+        description: 消息
+        type: string
+      reqId:
+        description: '`json:"请求id"`'
+        type: string
+    type: object
+  dto.SysRoleDto:
+    properties:
+      createdBy:
+        description: 创建人id
+        type: integer
+      id:
+        description: 主键
+        type: integer
+      name:
+        description: 角色名称
+        type: string
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色代码
+        type: string
+      roleSort:
+        description: 排序
+        type: integer
+      status:
+        description: 状态：1 有效 2 无效
+        type: integer
+      teamId:
+        description: 团队id
+        type: integer
+      updatedBy:
+        description: 修改人id
+        type: integer
+    type: object
+  dto.SysRoleGetPageReq:
+    properties:
+      page:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 每页大小
+        type: integer
+      status:
+        description: 状态：1 有效 2 无效
+        type: integer
+    type: object
+  models.SysRole:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        description: 创建人id
+        type: integer
+      id:
+        description: 主键
+        type: integer
+      name:
+        description: 角色名称
+        type: string
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色代码
+        type: string
+      roleSort:
+        description: 排序
+        type: integer
+      status:
+        description: 状态：1 有效 2 无效
+        type: integer
+      teamId:
+        description: 团队id
+        type: integer
+      updatedAt:
+        type: string
+      updatedBy:
+        description: 修改人id
+        type: integer
+    type: object
 info:
   contact:
     email: lisite199505@gmail.com
@@ -6,7 +125,164 @@ info:
   description: 致力于做一个开发快速，运行稳定的框架
   title: Huo API
   version: V1.0.1
-paths: {}
+paths:
+  /v2/admin/sys/sys-role/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysRoleDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 创建SysRole
+      tags:
+      - sys-SysRole
+  /v2/admin/sys/sys-role/del:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/base.ReqIds'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 删除SysRole
+      tags:
+      - sys-SysRole
+  /v2/admin/sys/sys-role/get:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/base.ReqId'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 获取SysRole
+      tags:
+      - sys-SysRole
+  /v2/admin/sys/sys-role/page:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysRoleGetPageReq'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/base.PageResp'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysRole'
+                        type: array
+                    type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: 获取SysRole列表
+      tags:
+      - sys-SysRole
+  /v2/admin/sys/sys-role/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysRoleDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 更新SysRole
+      tags:
+      - sys-SysRole
 securityDefinitions:
   Bearer:
     in: header

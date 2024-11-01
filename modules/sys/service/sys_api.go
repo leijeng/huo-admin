@@ -14,7 +14,7 @@ type SysApiService struct {
 }
 
 var SerSysApi = SysApiService{
-	base.NewService("admin"),
+	base.NewService("sys"),
 }
 
 func (s *SysApiService) GetByType(permType int, list *[]models.SysApi) error {
