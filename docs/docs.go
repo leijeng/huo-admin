@@ -19,6 +19,566 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v2/admin/sys/sys-api/create": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysApi"
+                ],
+                "summary": "创建SysApi",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysApiDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysApi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-api/del": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysApi"
+                ],
+                "summary": "删除SysApi",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/base.ReqIds"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysApi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-api/get": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysApi"
+                ],
+                "summary": "获取SysApi",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/base.ReqId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysApi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-api/page": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysApi"
+                ],
+                "summary": "获取SysApi列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysApiGetPageReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/base.PageResp"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.SysApi"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-api/update": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysApi"
+                ],
+                "summary": "更新SysApi",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysApiDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysApi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-menu/create": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysMenu"
+                ],
+                "summary": "创建SysMenu",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysMenuInsertReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysMenu"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-menu/del": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysMenu"
+                ],
+                "summary": "删除SysMenu",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/base.ReqIds"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysMenu"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-menu/get": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysMenu"
+                ],
+                "summary": "获取SysMenu",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/base.ReqId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysMenu"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-menu/page": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysMenu"
+                ],
+                "summary": "获取SysMenu列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysMenuGetPageReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/base.PageResp"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.SysMenu"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-menu/update": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysMenu"
+                ],
+                "summary": "更新SysMenu",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysMenuUpdateReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysMenu"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/v2/admin/sys/sys-role/create": {
             "post": {
                 "security": [
@@ -35,9 +595,9 @@ const docTemplate = `{
                 "summary": "创建SysRole",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "团队id",
-                        "name": "teamId",
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
                         "in": "header"
                     },
                     {
@@ -88,9 +648,9 @@ const docTemplate = `{
                 "summary": "删除SysRole",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "团队id",
-                        "name": "teamId",
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
                         "in": "header"
                     },
                     {
@@ -141,9 +701,9 @@ const docTemplate = `{
                 "summary": "获取SysRole",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "团队id",
-                        "name": "teamId",
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
                         "in": "header"
                     },
                     {
@@ -194,9 +754,9 @@ const docTemplate = `{
                 "summary": "获取SysRole列表",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "团队id",
-                        "name": "teamId",
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
                         "in": "header"
                     },
                     {
@@ -262,9 +822,9 @@ const docTemplate = `{
                 "summary": "更新SysRole",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "团队id",
-                        "name": "teamId",
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
                         "in": "header"
                     },
                     {
@@ -290,6 +850,377 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/models.SysRole"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-user/create": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysUser"
+                ],
+                "summary": "创建SysUser",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysUserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysUser"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-user/del": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysUser"
+                ],
+                "summary": "删除SysUser",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/base.ReqIds"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysUser"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-user/get": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysUser"
+                ],
+                "summary": "获取SysUser",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/base.ReqId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysUser"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-user/login": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysUser"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysUserLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysUser"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-user/logout": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysUser"
+                ],
+                "summary": "用户登出",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysUser"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-user/page": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysUser"
+                ],
+                "summary": "获取SysUser列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysUserGetPageReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/base.PageResp"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.SysUser"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/admin/sys/sys-user/update": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sys-SysUser"
+                ],
+                "summary": "更新SysUser",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token信息",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SysUserDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/base.Resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.SysUser"
                                         }
                                     }
                                 }
@@ -362,6 +1293,219 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.SysApiDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "permType": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.SysApiGetPageReq": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "description": "页码",
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.SysMenuGetPageReq": {
+            "type": "object",
+            "properties": {
+                "hidden": {
+                    "description": "显示状态",
+                    "type": "integer"
+                },
+                "page": {
+                    "description": "页码",
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "菜单名称",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.SysMenuInsertReq": {
+            "type": "object",
+            "properties": {
+                "breadcrumb": {
+                    "description": "是否面包屑",
+                    "type": "string"
+                },
+                "component": {
+                    "description": "组件",
+                    "type": "string"
+                },
+                "createBy": {
+                    "description": "创建者id",
+                    "type": "integer"
+                },
+                "hidden": {
+                    "description": "是否隐藏",
+                    "type": "boolean"
+                },
+                "icon": {
+                    "description": "图标",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "编码",
+                    "type": "integer"
+                },
+                "menuName": {
+                    "description": "菜单name",
+                    "type": "string"
+                },
+                "menuType": {
+                    "description": "菜单类型",
+                    "type": "string"
+                },
+                "noCache": {
+                    "description": "是否缓存",
+                    "type": "boolean"
+                },
+                "parentId": {
+                    "description": "上级菜单",
+                    "type": "integer"
+                },
+                "path": {
+                    "description": "路径",
+                    "type": "string"
+                },
+                "paths": {
+                    "description": "id路径",
+                    "type": "string"
+                },
+                "permission": {
+                    "description": "权限编码",
+                    "type": "string"
+                },
+                "sort": {
+                    "description": "排序",
+                    "type": "integer"
+                },
+                "sysApi": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SysApi"
+                    }
+                },
+                "title": {
+                    "description": "显示名称",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者id",
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.SysMenuUpdateReq": {
+            "type": "object",
+            "properties": {
+                "apis": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "component": {
+                    "description": "组件",
+                    "type": "string"
+                },
+                "createBy": {
+                    "description": "创建者id",
+                    "type": "integer"
+                },
+                "hidden": {
+                    "description": "是否显示",
+                    "type": "boolean"
+                },
+                "icon": {
+                    "description": "图标",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "编码",
+                    "type": "integer"
+                },
+                "menuName": {
+                    "description": "菜单name",
+                    "type": "string"
+                },
+                "menuType": {
+                    "description": "菜单类型",
+                    "type": "string"
+                },
+                "noCache": {
+                    "description": "是否缓存",
+                    "type": "boolean"
+                },
+                "parentId": {
+                    "description": "上级菜单",
+                    "type": "integer"
+                },
+                "path": {
+                    "description": "路径",
+                    "type": "string"
+                },
+                "paths": {
+                    "description": "id路径",
+                    "type": "string"
+                },
+                "permission": {
+                    "description": "权限编码",
+                    "type": "string"
+                },
+                "sort": {
+                    "description": "排序",
+                    "type": "integer"
+                },
+                "sysApi": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SysApi"
+                    }
+                },
+                "title": {
+                    "description": "显示名称",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者id",
+                    "type": "integer"
+                }
+            }
+        },
         "dto.SysRoleDto": {
             "type": "object",
             "properties": {
@@ -420,6 +1564,201 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.SysUserDto": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "birthday": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "isLogin": {
+                    "type": "integer"
+                },
+                "lockTime": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "roleId": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.SysUserGetPageReq": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "description": "页码",
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "description": "每页大小",
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.SysUserLoginReq": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SysApi": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "method": {
+                    "description": "请求类型",
+                    "type": "string"
+                },
+                "path": {
+                    "description": "请求地址",
+                    "type": "string"
+                },
+                "permType": {
+                    "description": "权限类型（1：无需认证 2:须token 3：须鉴权）",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "状态 3 DEF 2 OK 1 del",
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "标题",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "description": "最后更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "models.SysMenu": {
+            "type": "object",
+            "properties": {
+                "component": {
+                    "description": "前端组件路径",
+                    "type": "string"
+                },
+                "createBy": {
+                    "description": "创建者id",
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "hidden": {
+                    "description": "隐藏",
+                    "type": "boolean"
+                },
+                "icon": {
+                    "description": "图标",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "menuName": {
+                    "description": "菜单名",
+                    "type": "string"
+                },
+                "menuType": {
+                    "description": "菜单类型",
+                    "type": "integer"
+                },
+                "noCache": {
+                    "description": "是否缓存",
+                    "type": "boolean"
+                },
+                "parentId": {
+                    "description": "菜单父id",
+                    "type": "integer"
+                },
+                "path": {
+                    "description": "路径",
+                    "type": "string"
+                },
+                "permission": {
+                    "description": "权限",
+                    "type": "string"
+                },
+                "platformType": {
+                    "description": "平台类型 1 平台管理 2团队管理",
+                    "type": "integer"
+                },
+                "sort": {
+                    "description": "排序",
+                    "type": "integer"
+                },
+                "sysApi": {
+                    "description": "api关联表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SysApi"
+                    }
+                },
+                "title": {
+                    "description": "显示名称",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者id",
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
         "models.SysRole": {
             "type": "object",
             "properties": {
@@ -464,6 +1803,79 @@ const docTemplate = `{
                 "updatedBy": {
                     "description": "修改人id",
                     "type": "integer"
+                }
+            }
+        },
+        "models.SysUser": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "description": "头像",
+                    "type": "string"
+                },
+                "bio": {
+                    "description": "签名",
+                    "type": "string"
+                },
+                "birthday": {
+                    "description": "生日 格式 yyyy-MM-dd",
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "邮箱",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "性别 1男 2女 3未知",
+                    "type": "integer"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "isLogin": {
+                    "description": "是否允许登录",
+                    "type": "integer"
+                },
+                "lockTime": {
+                    "description": "锁定结束时间",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "昵称",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "手机号",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "roleId": {
+                    "description": "角色ID",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "状态 1正常",
+                    "type": "integer"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "description": "最后更新时间",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "用户名",
+                    "type": "string"
                 }
             }
         }

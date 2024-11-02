@@ -1,8 +1,12 @@
 package utils
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/leijeng/huo-admin/common/consts"
 	"strconv"
 	"time"
 )
@@ -77,4 +81,19 @@ func StructToJsonString(data interface{}) string {
 	}
 
 	return string(dataByte)
+}
+
+func CheckLogout(c *gin.Context, authorization string) string {
+	client := InitRedis()
+	cacheKey := consts.LogoutJwtKey + Md5(authorization)
+	exists := client.Get(c, cacheKey)
+
+	return exists.Val()
+}
+
+func Md5(s string) string {
+	md5 := md5.New()
+	md5.Write([]byte(s))
+	md5Str := hex.EncodeToString(md5.Sum(nil))
+	return md5Str
 }

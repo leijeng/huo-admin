@@ -27,7 +27,7 @@ func (s *SysApiService) GetByType(permType int, list *[]models.SysApi) error {
 			}
 		}
 	}
-	db := s.DB().Where("status > 1")
+	db := s.DB().Where("status = 1")
 	if permType > 0 {
 		db.Where("perm_type = ?", permType)
 	}

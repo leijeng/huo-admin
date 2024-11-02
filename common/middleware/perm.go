@@ -17,14 +17,6 @@ func PermHandler() gin.HandlerFunc {
 			return
 		}
 
-		c.Next()
-		return
-
-		if rid == -2 {
-			Fail(c, 403, "未授权")
-			return
-		}
-
 		curUri := c.Request.URL.Path
 		curMethod := c.Request.Method
 		//uid := c.GetInt("a_uid")
@@ -34,7 +26,7 @@ func PermHandler() gin.HandlerFunc {
 		var aid int
 		apis := GetApis()
 		for _, api := range apis {
-			if api.Method == curMethod && KeyMatch2(curUri, api.Path) {
+			if strings.ToUpper(api.Method) == curMethod && KeyMatch2(curUri, api.Path) {
 				aid = api.Id
 				c.Set("a_aid", api.Id)
 				c.Set("a_atitle", api.Title)
@@ -42,14 +34,13 @@ func PermHandler() gin.HandlerFunc {
 			}
 		}
 
-		//fmt.Println(aid)
 		if aid < 1 {
-			Fail(c, 403, "无权限")
+			Fail(c, 403, "无权限,aid为空")
 			return
 		}
 
 		if err := service.SerSysMenu.CanAccess(c, aid); err != nil {
-			Fail(c, 403, "无权限")
+			Fail(c, 403, "无权限,获取进入权限是")
 			return
 		}
 
@@ -61,7 +52,7 @@ var apis []models.SysApi
 
 func GetApis() []models.SysApi {
 	if len(apis) == 0 {
-		service.SerSysApi.GetByType(3, &apis)
+		service.SerSysApi.GetByType(0, &apis)
 	}
 	return apis
 }

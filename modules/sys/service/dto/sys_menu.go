@@ -7,8 +7,13 @@ import (
 
 type SysMenuGetPageReq struct {
 	base.ReqPage `search:"-"`
+	SortOrder    string `json:"-" query:"type:order;column:id"`
 	Title        string `form:"title" search:"type:contains;column:title;table:sys_menu" comment:"菜单名称"` // 菜单名称
 	Hidden       int    `form:"hidden" search:"type:exact;column:hidden;table:sys_menu" comment:"显示状态"`  // 显示状态
+}
+
+func (SysMenuGetPageReq) TableName() string {
+	return models.TBSysMenu
 }
 
 func (m *SysMenuGetPageReq) GetNeedSearch() interface{} {

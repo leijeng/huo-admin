@@ -17,8 +17,10 @@ type SysApi struct {
 	UpdatedAt time.Time `json:"updatedAt" gorm:"type:datetime(3);comment:最后更新时间"`                        //最后更新时间
 }
 
+const TBSysApi = "sys_api"
+
 func (SysApi) TableName() string {
-	return "sys_api"
+	return TBSysApi
 }
 
 func NewSysApi() *SysApi {

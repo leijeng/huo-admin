@@ -21,7 +21,7 @@ type SysMenu struct {
 }
 
 var SerSysMenu = SysMenu{
-	base.NewService(""),
+	base.NewService("sys"),
 }
 
 // GetPage 获取SysMenu列表
@@ -123,13 +123,20 @@ func (e *SysMenu) GetMenus(c *gin.Context, mvs *[]models.SysMenu) errs.IError {
 }
 
 func (e *SysMenu) GetRoles(c *gin.Context) (platform, teamId int, roles []int, ierr errs.IError) {
-	role := utils.GetRoleId(c)
+
 	// platform = 2
 	// if role != 0 { //超管
-	platform = 1
-	if role > 0 {
-		roles = append(roles, role)
+	platform = 0
+
+	var uid = c.GetInt("a_uid")
+
+	_ = e.DB().Raw("select sys_role_id from sys_user_role where sys_user_id = ?", uid).Find(&roles).Error
+
+	// 如果有超级管理员权限，不需要角色
+	if len(roles) > 0 && utils.MapKeyInIntSlice(roles, 1) {
+		roles = make([]int, 0)
 	}
+
 	// } else { //团队菜单
 	// 	teamId = utils.GetTeamId(c)
 	// 	if teamId < 1 {
@@ -167,16 +174,22 @@ func (e *SysMenu) CanAccess(c *gin.Context, apiId int) error {
 	var ids []int
 
 	if len(roles) > 0 {
-		if err := e.DB().Raw("select sys_api_id from sys_menu_api_rule r,sys_role_menu rm  where  rm.role_id in ? and rm.menu_id = r.sys_menu_id", roles).
+		if err := e.DB().Raw("select sys_api_id from sys_menu_api r,sys_role_menu rm  where  rm.sys_role_id in ? and rm.sys_menu_id = r.sys_menu_id", roles).
 			Find(&ids).Error; err != nil {
 			return err
 		}
 	} else {
-		if err := e.DB().Raw("select sys_api_id from sys_menu_api_rule r,sys_menu m  where m.platform_type >= ? and m.id = r.sys_menu_id", platform).
+		//if err := e.DB().Raw("select sys_api_id from sys_menu_api r,sys_menu m  where m.platform_type >= ? and m.id = r.sys_menu_id", platform).
+		//	Find(&ids).Error; err != nil {
+		//	return err
+		//}
+
+		if err := e.DB().Raw("select id from sys_api where status = 1 and perm_type = ? ", platform).
 			Find(&ids).Error; err != nil {
 			return err
 		}
 	}
+	core.Log.Error("CanAccess -- ids", zap.Any("ids", ids))
 
 	for _, id := range ids {
 		if id == apiId {

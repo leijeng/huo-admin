@@ -21,7 +21,7 @@ var Api{{.ClassName}} = {{.ClassName}}Api{}
 // @Tags {{.PackageName}}-{{.ClassName}}
 // @Accept application/json
 // @Product application/json
-// @Param teamId header int false "团队id"
+// @Param Authorization header string false "token信息"
 // @Param data body dto.{{.ClassName}}GetPageReq true "body"
 // @Success 200 {object} base.Resp{data=base.PageResp{list=[]models.{{.ClassName}}}} "{"code": 200, "data": [...]}"
 // @Router {{.ApiRoot}}/{{.PackageName}}/{{.ModuleName}}/page [post]

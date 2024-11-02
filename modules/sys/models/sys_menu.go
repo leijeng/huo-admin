@@ -22,6 +22,8 @@ type SysMenu struct {
 	base.ModelTime
 }
 
+const TBSysMenu = "sys_menu"
+
 func (SysMenu) TableName() string {
-	return "sys_menu"
+	return TBSysMenu
 }

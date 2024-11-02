@@ -11,6 +11,7 @@ import (
 	"github.com/leijeng/huo-admin/modules/sys/models"
 	"github.com/leijeng/huo-admin/modules/sys/service"
 	"github.com/leijeng/huo-core/core"
+	"go.uber.org/zap"
 	"log"
 	"net/http"
 	"strconv"
@@ -43,55 +44,48 @@ func GenerateJWT2(sub int, secretKey string) (string, error) {
 }
 
 func AdminJwtHandler() gin.HandlerFunc {
-	// return func(c *gin.Context) {
-	// 	authorization := c.GetHeader("Authorization")
+	return func(c *gin.Context) {
+		authorization := c.GetHeader("Authorization")
 
-	// 	//检查是否退出登录
-	// 	isLogout := utils.CheckLogout(c, authorization)
-	// 	if isLogout != "" {
-	// 		Fail(c, 403, "you logout")
-	// 		return
-	// 	}
+		//检查是否退出登录
+		isLogout := utils.CheckLogout(c, authorization)
+		if isLogout != "" {
+			Fail(c, 403, "you logout")
+			return
+		}
 
-	// 	core.Log.Debug("JwtHandler", zap.Any("Authorization", authorization))
-	// 	accessToken, err := GetAccessToken(authorization)
-	// 	log.Println("authorization2", accessToken)
-	// 	if err != nil {
-	// 		Fail(c, 401, err.Error())
-	// 		return
-	// 	}
+		core.Log.Debug("JwtHandler", zap.Any("Authorization", authorization))
+		accessToken, err := GetAccessToken(authorization)
+		if err != nil {
+			Fail(c, 401, err.Error())
+			return
+		}
 
-	// 	// 解析Token
-	// 	claims := jwt.MapClaims{}
-	// 	//err = ParseStr(accessToken, core.Cfg.JWT.SignKey)
-	// 	if core.Cfg.Server.Mode == "test" {
-	// 		err = Parse(accessToken, claims, core.Cfg.JWT.SignKey, jwt.WithSubject(core.Cfg.JWT.Subject), jwt.WithoutClaimsValidation())
-	// 	} else {
-	// 		err = Parse(accessToken, claims, core.Cfg.JWT.SignKey, jwt.WithSubject(core.Cfg.JWT.Subject))
-	// 	}
-	// 	if err != nil {
-	// 		core.Log.Error("JwtHandler.Parse", zap.Any("err", err))
-	// 		Fail(c, 401, err.Error())
-	// 		return
-	// 	}
+		// 解析Token
+		claims := jwt.MapClaims{}
+		//err = ParseStr(accessToken, core.Cfg.JWT.SignKey)
+		if core.Cfg.Server.Mode == "test" {
+			err = Parse(accessToken, claims, core.Cfg.JWT.SignKey, jwt.WithSubject(core.Cfg.JWT.Subject), jwt.WithoutClaimsValidation())
+		} else {
+			err = Parse(accessToken, claims, core.Cfg.JWT.SignKey, jwt.WithSubject(core.Cfg.JWT.Subject))
+		}
+		if err != nil {
+			core.Log.Error("JwtHandler.Parse", zap.Any("err", err))
+			Fail(c, 401, err.Error())
+			return
+		}
 
-	// 	fmt.Printf("claims ==== %+v", claims)
-	// 	sub, ok := claims["sub"]
-	// 	if ok {
-	// 		uid, ok := sub.(float64)
-	// 		if ok {
-	// 			c.Set("uid", int(uid))
-	// 			c.Set("a_uid", int(uid))
-	// 			//c.Set("a_mobile", )
-	// 			//c.Set("a_nickname", )
-	// 			//c.Set("jwt_data", )
-	// 			//c.Set("a_rid", 1)
-	// 		}
-	// 	}
+		fmt.Printf("claims ==== %+v", claims)
+		sub, ok := claims["uid"]
+		if ok {
+			uid, _ := sub.(float64)
+			c.Set("uid", int(uid))
+			c.Set("a_uid", int(uid))
+		}
 
-	// 	c.Next()
-	// }
-	return JwtHandler()
+		c.Next()
+	}
+	//return JwtHandler()
 }
 
 func JwtHandler() gin.HandlerFunc {
