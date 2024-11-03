@@ -29,6 +29,7 @@ func (e *SysUser) LoginPwd(req dto.SysUserLoginReq, userData models.SysUser) (re
 	return e.generateToken(userData)
 }
 
+// generateToken 生成token
 func (e *SysUser) generateToken(userData models.SysUser) (res dto.LoginOK, err error) {
 
 	exp := time.Now().Add(time.Duration(core.Cfg.JWT.Expires) * time.Minute)
@@ -61,4 +62,39 @@ func (e *SysUser) generateToken(userData models.SysUser) (res dto.LoginOK, err e
 	refT, _ := utils.Generate(claims, core.Cfg.JWT.SignKey)
 	lok.RefreshToken = refT
 	return lok, nil
+}
+
+// AddRoles 添加角色
+func (e *SysUser) AddRoles(data dto.SysAddRoleDto) error {
+	tx := e.DB().Model(&models.SysUserRole{}).Begin()
+
+	var sysUserRoleData models.SysUserRole
+
+	err := tx.Where("sys_user_id = ?", data.UserId).Delete(&sysUserRoleData).Error
+
+	if err != nil {
+		core.Log.Error(" AddRoles err " + err.Error())
+		tx.Rollback()
+		return err
+	}
+
+	var sysUserRoleAddData []models.SysUserRole
+
+	for _, roleId := range data.RoleIds {
+
+		var tmp models.SysUserRole
+		tmp.SysUserId = data.UserId
+		tmp.SysRoleId = roleId
+
+		sysUserRoleAddData = append(sysUserRoleAddData, tmp)
+	}
+
+	err = tx.Create(&sysUserRoleAddData).Error
+
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	return tx.Commit().Error
 }

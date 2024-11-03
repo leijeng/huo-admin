@@ -21,7 +21,7 @@ var ApiSysMenu = SysMenuApi{}
 // @Tags sys-SysMenu
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysMenuGetPageReq true "body"
 // @Success 200 {object} base.Resp{data=base.PageResp{list=[]models.SysMenu}} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-menu/page [post]
@@ -51,7 +51,7 @@ func (e *SysMenuApi) QueryPage(c *gin.Context) {
 // @Tags sys-SysMenu
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body base.ReqId true "body"
 // @Success 200 {object} base.Resp{data=models.SysMenu} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-menu/get [post]
@@ -76,7 +76,7 @@ func (e *SysMenuApi) Get(c *gin.Context) {
 // @Tags sys-SysMenu
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysMenuInsertReq true "body"
 // @Success 200 {object} base.Resp{data=models.SysMenu} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-menu/create [post]
@@ -101,7 +101,7 @@ func (e *SysMenuApi) Create(c *gin.Context) {
 // @Tags sys-SysMenu
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysMenuUpdateReq true "body"
 // @Success 200 {object} base.Resp{data=models.SysMenu} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-menu/update [post]
@@ -126,7 +126,7 @@ func (e *SysMenuApi) Update(c *gin.Context) {
 // @Tags sys-SysMenu
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body base.ReqIds true "body"
 // @Success 200 {object} base.Resp{data=models.SysMenu} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-menu/del [post]
@@ -138,6 +138,29 @@ func (e *SysMenuApi) Del(c *gin.Context) {
 		return
 	}
 	if err := service.SerSysMenu.DelIds(&models.SysMenu{}, req.Ids); err != nil {
+		e.Error(c, err)
+		return
+	}
+	e.Ok(c)
+}
+
+// AddApis 添加关联路由
+// @Summary 添加关联路由
+// @Tags sys-SysMenuApi
+// @Accept application/json
+// @Product application/json
+// @Param authorization header string false "token信息"
+// @Param data body dto.AddMenuApiDto true "body"
+// @Success 200 {object} base.Resp{data=models.SysMenuApi} "{"code": 200, "data": [...]}"
+// @Router /v2/admin/sys/sys-menu/addApis [post]
+// @Security Bearer
+func (e *SysMenuApi) AddApis(c *gin.Context) {
+	var req dto.AddMenuApiDto
+	if err := c.ShouldBind(&req); err != nil {
+		e.Error(c, err)
+		return
+	}
+	if err := service.SerSysMenuApi.AddApis(req); err != nil {
 		e.Error(c, err)
 		return
 	}

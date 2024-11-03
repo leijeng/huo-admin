@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/leijeng/huo-admin/modules/sys/models"
 	"github.com/leijeng/huo-admin/modules/sys/service"
@@ -34,10 +35,11 @@ func PermHandler() gin.HandlerFunc {
 			}
 		}
 
-		if aid < 1 {
+		if aid < 0 {
 			Fail(c, 403, "无权限,aid为空")
 			return
 		}
+		fmt.Println("aid ===", aid)
 
 		if err := service.SerSysMenu.CanAccess(c, aid); err != nil {
 			Fail(c, 403, "无权限,获取进入权限是")

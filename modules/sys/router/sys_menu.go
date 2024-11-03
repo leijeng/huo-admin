@@ -1,9 +1,9 @@
 package router
 
 import (
-	"github.com/leijeng/huo-admin/modules/sys/apis"
-	"github.com/leijeng/huo-admin/common/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/leijeng/huo-admin/common/middleware"
+	"github.com/leijeng/huo-admin/modules/sys/apis"
 )
 
 func init() {
@@ -19,5 +19,6 @@ func registerSysMenuRouter(v1 *gin.RouterGroup) {
 		r.POST("/update", apis.ApiSysMenu.Update)
 		r.POST("/page", apis.ApiSysMenu.QueryPage)
 		r.POST("/del", apis.ApiSysMenu.Del)
+		r.POST("/addApis", apis.ApiSysMenu.AddApis) // 添加后台路由
 	}
 }

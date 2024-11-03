@@ -20,6 +20,7 @@ func registerSysUserRouter(v1 *gin.RouterGroup) {
 		r.POST("/page", apis.ApiSysUser.QueryPage)
 		r.POST("/del", apis.ApiSysUser.Del)
 		r.POST("/logout", apis.ApiSysUser.Logout)
+		r.POST("/addRoles", apis.ApiSysUser.AddRoles)
 	}
 	rv := v1.Group("sys-user")
 	{

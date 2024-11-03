@@ -4,10 +4,11 @@ import (
 	"github.com/leijeng/huo-core/core/base"
 )
 
-type SysRoleService struct {
+type SysUserRoleService struct {
 	*base.BaseService
 }
 
-var SerSysRole = SysRoleService{
+var SerSysUserRole = SysUserRoleService{
 	base.NewService("sys"),
 }
+

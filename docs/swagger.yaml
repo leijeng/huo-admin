@@ -41,6 +41,33 @@ definitions:
         description: '`json:"请求id"`'
         type: string
     type: object
+  dto.AddMenuApiDto:
+    properties:
+      apiIds:
+        items:
+          type: integer
+        type: array
+      menuId:
+        type: integer
+    type: object
+  dto.AddRoleMenuDto:
+    properties:
+      menuIds:
+        items:
+          type: integer
+        type: array
+      roleId:
+        type: integer
+    type: object
+  dto.SysAddRoleDto:
+    properties:
+      roleIds:
+        items:
+          type: integer
+        type: array
+      userId:
+        type: integer
+    type: object
   dto.SysApiDto:
     properties:
       id:
@@ -66,6 +93,22 @@ definitions:
         description: 每页大小
         type: integer
       status:
+        type: integer
+    type: object
+  dto.SysMenuApiDto:
+    properties:
+      sysApiId:
+        type: integer
+      sysMenuId:
+        type: integer
+    type: object
+  dto.SysMenuApiGetPageReq:
+    properties:
+      page:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 每页大小
         type: integer
     type: object
   dto.SysMenuGetPageReq:
@@ -236,6 +279,22 @@ definitions:
         description: 状态：1 有效 2 无效
         type: integer
     type: object
+  dto.SysRoleMenuDto:
+    properties:
+      sysMenuId:
+        type: integer
+      sysRoleId:
+        type: integer
+    type: object
+  dto.SysRoleMenuGetPageReq:
+    properties:
+      page:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 每页大小
+        type: integer
+    type: object
   dto.SysUserDto:
     properties:
       avatar:
@@ -287,6 +346,22 @@ definitions:
         type: string
       username:
         type: string
+    type: object
+  dto.SysUserRoleDto:
+    properties:
+      sysRoleId:
+        type: integer
+      sysUserId:
+        type: integer
+    type: object
+  dto.SysUserRoleGetPageReq:
+    properties:
+      page:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 每页大小
+        type: integer
     type: object
   models.SysApi:
     properties:
@@ -374,6 +449,13 @@ definitions:
         description: 更新时间
         type: string
     type: object
+  models.SysMenuApi:
+    properties:
+      sysApiId:
+        type: integer
+      sysMenuId:
+        type: integer
+    type: object
   models.SysRole:
     properties:
       createdAt:
@@ -406,6 +488,13 @@ definitions:
         type: string
       updatedBy:
         description: 修改人id
+        type: integer
+    type: object
+  models.SysRoleMenu:
+    properties:
+      sysMenuId:
+        type: integer
+      sysRoleId:
         type: integer
     type: object
   models.SysUser:
@@ -462,6 +551,13 @@ definitions:
         description: 用户名
         type: string
     type: object
+  models.SysUserRole:
+    properties:
+      sysRoleId:
+        type: integer
+      sysUserId:
+        type: integer
+    type: object
 info:
   contact:
     email: lisite199505@gmail.com
@@ -478,7 +574,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -508,7 +604,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -538,7 +634,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -568,7 +664,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -605,7 +701,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -628,6 +724,193 @@ paths:
       summary: 更新SysApi
       tags:
       - sys-SysApi
+  /v2/admin/sys/sys-menu-api/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysMenuApiDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysMenuApi'
+              type: object
+      security:
+      - Bearer: []
+      summary: 创建SysMenuApi
+      tags:
+      - sys-SysMenuApi
+  /v2/admin/sys/sys-menu-api/del:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/base.ReqIds'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysMenuApi'
+              type: object
+      security:
+      - Bearer: []
+      summary: 删除SysMenuApi
+      tags:
+      - sys-SysMenuApi
+  /v2/admin/sys/sys-menu-api/get:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/base.ReqId'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysMenuApi'
+              type: object
+      security:
+      - Bearer: []
+      summary: 获取SysMenuApi
+      tags:
+      - sys-SysMenuApi
+  /v2/admin/sys/sys-menu-api/page:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysMenuApiGetPageReq'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/base.PageResp'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysMenuApi'
+                        type: array
+                    type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: 获取SysMenuApi列表
+      tags:
+      - sys-SysMenuApi
+  /v2/admin/sys/sys-menu-api/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysMenuApiDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysMenuApi'
+              type: object
+      security:
+      - Bearer: []
+      summary: 更新SysMenuApi
+      tags:
+      - sys-SysMenuApi
+  /v2/admin/sys/sys-menu/addApis:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AddMenuApiDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysMenuApi'
+              type: object
+      security:
+      - Bearer: []
+      summary: 添加关联路由
+      tags:
+      - sys-SysMenuApi
   /v2/admin/sys/sys-menu/create:
     post:
       consumes:
@@ -635,7 +918,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -665,7 +948,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -695,7 +978,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -725,7 +1008,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -762,7 +1045,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -785,6 +1068,193 @@ paths:
       summary: 更新SysMenu
       tags:
       - sys-SysMenu
+  /v2/admin/sys/sys-role-menu/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysRoleMenuDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRoleMenu'
+              type: object
+      security:
+      - Bearer: []
+      summary: 创建SysRoleMenu
+      tags:
+      - sys-SysRoleMenu
+  /v2/admin/sys/sys-role-menu/del:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/base.ReqIds'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRoleMenu'
+              type: object
+      security:
+      - Bearer: []
+      summary: 删除SysRoleMenu
+      tags:
+      - sys-SysRoleMenu
+  /v2/admin/sys/sys-role-menu/get:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/base.ReqId'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRoleMenu'
+              type: object
+      security:
+      - Bearer: []
+      summary: 获取SysRoleMenu
+      tags:
+      - sys-SysRoleMenu
+  /v2/admin/sys/sys-role-menu/page:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysRoleMenuGetPageReq'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/base.PageResp'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysRoleMenu'
+                        type: array
+                    type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: 获取SysRoleMenu列表
+      tags:
+      - sys-SysRoleMenu
+  /v2/admin/sys/sys-role-menu/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysRoleMenuDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRoleMenu'
+              type: object
+      security:
+      - Bearer: []
+      summary: 更新SysRoleMenu
+      tags:
+      - sys-SysRoleMenu
+  /v2/admin/sys/sys-role/addMenus:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AddRoleMenuDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 添加关联菜单
+      tags:
+      - sys-SysRole
   /v2/admin/sys/sys-role/create:
     post:
       consumes:
@@ -792,7 +1262,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -822,7 +1292,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -852,7 +1322,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -882,7 +1352,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -919,7 +1389,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -942,6 +1412,193 @@ paths:
       summary: 更新SysRole
       tags:
       - sys-SysRole
+  /v2/admin/sys/sys-user-role/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysUserRoleDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysUserRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 创建SysUserRole
+      tags:
+      - sys-SysUserRole
+  /v2/admin/sys/sys-user-role/del:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/base.ReqIds'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysUserRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 删除SysUserRole
+      tags:
+      - sys-SysUserRole
+  /v2/admin/sys/sys-user-role/get:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/base.ReqId'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysUserRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 获取SysUserRole
+      tags:
+      - sys-SysUserRole
+  /v2/admin/sys/sys-user-role/page:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysUserRoleGetPageReq'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/base.PageResp'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.SysUserRole'
+                        type: array
+                    type: object
+              type: object
+      security:
+      - Bearer: []
+      summary: 获取SysUserRole列表
+      tags:
+      - sys-SysUserRole
+  /v2/admin/sys/sys-user-role/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 团队id
+        in: header
+        name: teamId
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysUserRoleDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysUserRole'
+              type: object
+      security:
+      - Bearer: []
+      summary: 更新SysUserRole
+      tags:
+      - sys-SysUserRole
+  /v2/admin/sys/sys-user/addRoles:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: token信息
+        in: header
+        name: authorization
+        type: string
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SysAddRoleDto'
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            allOf:
+            - $ref: '#/definitions/base.Resp'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.SysUser'
+              type: object
+      security:
+      - Bearer: []
+      summary: 添加角色
+      tags:
+      - sys-SysUser
   /v2/admin/sys/sys-user/create:
     post:
       consumes:
@@ -949,7 +1606,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -979,7 +1636,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -1009,7 +1666,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body
@@ -1065,7 +1722,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       responses:
         "200":
@@ -1126,7 +1783,7 @@ paths:
       parameters:
       - description: token信息
         in: header
-        name: Authorization
+        name: authorization
         type: string
       - description: body
         in: body

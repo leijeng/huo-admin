@@ -1,6 +1,7 @@
 package apis
 
 import (
+	"errors"
 	"github.com/leijeng/huo-admin/common/consts"
 	"github.com/leijeng/huo-admin/common/utils"
 	"github.com/leijeng/huo-admin/modules/sys/models"
@@ -54,7 +55,7 @@ func (e *SysUserApi) QueryPage(c *gin.Context) {
 // @Tags sys-SysUser
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body base.ReqId true "body"
 // @Success 200 {object} base.Resp{data=models.SysUser} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-user/get [post]
@@ -78,7 +79,7 @@ func (e *SysUserApi) Get(c *gin.Context) {
 // @Tags sys-SysUser
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysUserDto true "body"
 // @Success 200 {object} base.Resp{data=models.SysUser} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-user/create [post]
@@ -103,7 +104,7 @@ func (e *SysUserApi) Create(c *gin.Context) {
 // @Tags sys-SysUser
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysUserDto true "body"
 // @Success 200 {object} base.Resp{data=models.SysUser} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-user/update [post]
@@ -128,7 +129,7 @@ func (e *SysUserApi) Update(c *gin.Context) {
 // @Tags sys-SysUser
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body base.ReqIds true "body"
 // @Success 200 {object} base.Resp{data=models.SysUser} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-user/del [post]
@@ -140,6 +141,35 @@ func (e *SysUserApi) Del(c *gin.Context) {
 		return
 	}
 	if err := service.SerSysUser.DelIds(&models.SysUser{}, req.Ids); err != nil {
+		e.Error(c, err)
+		return
+	}
+	e.Ok(c)
+}
+
+// AddRoles 添加角色
+// @Summary 添加角色
+// @Tags sys-SysUser
+// @Accept application/json
+// @Product application/json
+// @Param authorization header string false "token信息"
+// @Param data body dto.SysAddRoleDto true "body"
+// @Success 200 {object} base.Resp{data=models.SysUser} "{"code": 200, "data": [...]}"
+// @Router /v2/admin/sys/sys-user/addRoles [post]
+// @Security Bearer
+func (e *SysUserApi) AddRoles(c *gin.Context) {
+	var req dto.SysAddRoleDto
+	if err := c.ShouldBind(&req); err != nil {
+		e.Error(c, err)
+		return
+	}
+
+	if len(req.RoleIds) < 0 {
+		e.Error(c, errors.New("role empty"))
+		return
+	}
+
+	if err := service.SerSysUser.AddRoles(req); err != nil {
 		e.Error(c, err)
 		return
 	}
@@ -186,7 +216,7 @@ func (e *SysUserApi) Login(c *gin.Context) {
 // @Tags sys-SysUser
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Success 200 {object} base.Resp{data=models.SysUser} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-user/logout [post]
 // @Security Bearer

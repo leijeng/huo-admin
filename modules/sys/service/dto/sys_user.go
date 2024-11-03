@@ -48,3 +48,8 @@ type LoginOK struct {
 	Roles        []string        `json:"roles"`        //角色
 	RefreshToken string          `json:"refreshToken"` //刷新token
 }
+
+type SysAddRoleDto struct {
+	UserId  int   `json:"userId"`
+	RoleIds []int `json:"roleIds"`
+}

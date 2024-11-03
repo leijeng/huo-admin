@@ -114,3 +114,8 @@ type MenuRole struct {
 type SelectRole struct {
 	RoleId int `uri:"roleId"`
 }
+
+type AddMenuApiDto struct {
+	MenuId int   `json:"menuId"`
+	ApiIds []int `json:"apiIds"`
+}

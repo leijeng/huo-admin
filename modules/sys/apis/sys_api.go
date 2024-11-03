@@ -21,7 +21,7 @@ var ApiSysApi = SysApiApi{}
 // @Tags sys-SysApi
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysApiGetPageReq true "body"
 // @Success 200 {object} base.Resp{data=base.PageResp{list=[]models.SysApi}} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-api/page [post]
@@ -51,7 +51,7 @@ func (e *SysApiApi) QueryPage(c *gin.Context) {
 // @Tags sys-SysApi
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body base.ReqId true "body"
 // @Success 200 {object} base.Resp{data=models.SysApi} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-api/get [post]
@@ -75,7 +75,7 @@ func (e *SysApiApi) Get(c *gin.Context) {
 // @Tags sys-SysApi
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysApiDto true "body"
 // @Success 200 {object} base.Resp{data=models.SysApi} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-api/create [post]
@@ -100,7 +100,7 @@ func (e *SysApiApi) Create(c *gin.Context) {
 // @Tags sys-SysApi
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysApiDto true "body"
 // @Success 200 {object} base.Resp{data=models.SysApi} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-api/update [post]
@@ -125,7 +125,7 @@ func (e *SysApiApi) Update(c *gin.Context) {
 // @Tags sys-SysApi
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body base.ReqIds true "body"
 // @Success 200 {object} base.Resp{data=models.SysApi} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-api/del [post]

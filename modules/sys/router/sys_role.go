@@ -1,9 +1,9 @@
 package router
 
 import (
-	"github.com/leijeng/huo-admin/modules/sys/apis"
-	"github.com/leijeng/huo-admin/common/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/leijeng/huo-admin/common/middleware"
+	"github.com/leijeng/huo-admin/modules/sys/apis"
 )
 
 func init() {
@@ -19,5 +19,6 @@ func registerSysRoleRouter(v1 *gin.RouterGroup) {
 		r.POST("/update", apis.ApiSysRole.Update)
 		r.POST("/page", apis.ApiSysRole.QueryPage)
 		r.POST("/del", apis.ApiSysRole.Del)
+		r.POST("/addMenus", apis.ApiSysRole.AddMenus)
 	}
 }

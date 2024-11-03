@@ -1,8 +1,8 @@
 package dto
 
 import (
-    "github.com/leijeng/huo-admin/modules/sys/models"
-    "github.com/leijeng/huo-core/core/base"
+	"github.com/leijeng/huo-admin/modules/sys/models"
+	"github.com/leijeng/huo-core/core/base"
 )
 
 type SysRoleGetPageReq struct {
@@ -16,7 +16,7 @@ func (SysRoleGetPageReq) TableName() string {
 	return models.TBSysRole
 }
 
-//SysRole
+// SysRole
 type SysRoleDto struct {
 	Id        int    `json:"id"`                         //主键
 	Name      string `json:"name" form:"name"`           //角色名称
@@ -27,4 +27,9 @@ type SysRoleDto struct {
 	Remark    string `json:"remark" form:"remark"`       //备注
 	CreatedBy int    `json:"createdBy" form:"createdBy"` //创建人id
 	UpdatedBy int    `json:"updatedBy" form:"updatedBy"` //修改人id
+}
+
+type AddRoleMenuDto struct {
+	RoleId  int   `json:"roleId"`
+	MenuIds []int `json:"menuIds"`
 }

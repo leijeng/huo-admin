@@ -21,7 +21,7 @@ var ApiSysRole = SysRoleApi{}
 // @Tags sys-SysRole
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysRoleGetPageReq true "body"
 // @Success 200 {object} base.Resp{data=base.PageResp{list=[]models.SysRole}} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-role/page [post]
@@ -51,7 +51,7 @@ func (e *SysRoleApi) QueryPage(c *gin.Context) {
 // @Tags sys-SysRole
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body base.ReqId true "body"
 // @Success 200 {object} base.Resp{data=models.SysRole} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-role/get [post]
@@ -75,7 +75,7 @@ func (e *SysRoleApi) Get(c *gin.Context) {
 // @Tags sys-SysRole
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysRoleDto true "body"
 // @Success 200 {object} base.Resp{data=models.SysRole} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-role/create [post]
@@ -100,7 +100,7 @@ func (e *SysRoleApi) Create(c *gin.Context) {
 // @Tags sys-SysRole
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body dto.SysRoleDto true "body"
 // @Success 200 {object} base.Resp{data=models.SysRole} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-role/update [post]
@@ -125,7 +125,7 @@ func (e *SysRoleApi) Update(c *gin.Context) {
 // @Tags sys-SysRole
 // @Accept application/json
 // @Product application/json
-// @Param Authorization header string false "token信息"
+// @Param authorization header string false "token信息"
 // @Param data body base.ReqIds true "body"
 // @Success 200 {object} base.Resp{data=models.SysRole} "{"code": 200, "data": [...]}"
 // @Router /v2/admin/sys/sys-role/del [post]
@@ -137,6 +137,29 @@ func (e *SysRoleApi) Del(c *gin.Context) {
 		return
 	}
 	if err := service.SerSysRole.DelIds(&models.SysRole{}, req.Ids); err != nil {
+		e.Error(c, err)
+		return
+	}
+	e.Ok(c)
+}
+
+// AddMenus 添加关联菜单
+// @Summary 添加关联菜单
+// @Tags sys-SysRole
+// @Accept application/json
+// @Product application/json
+// @Param authorization header string false "token信息"
+// @Param data body dto.AddRoleMenuDto true "body"
+// @Success 200 {object} base.Resp{data=models.SysRole} "{"code": 200, "data": [...]}"
+// @Router /v2/admin/sys/sys-role/addMenus [post]
+// @Security Bearer
+func (e *SysRoleApi) AddMenus(c *gin.Context) {
+	var req dto.AddRoleMenuDto
+	if err := c.ShouldBind(&req); err != nil {
+		e.Error(c, err)
+		return
+	}
+	if err := service.SerSysRoleMenu.AddMenus(req); err != nil {
 		e.Error(c, err)
 		return
 	}
